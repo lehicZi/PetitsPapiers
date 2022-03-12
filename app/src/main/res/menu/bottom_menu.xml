@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuAecrire"
+        android:title="À ajouter"
+        android:icon="@drawable/ic_to_write"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/menuAVoir"
+        android:title="À voir"
+        android:icon="@drawable/ic_movie"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/menuTire"
+        android:title="Tirés"
+        android:icon="@drawable/ic_picked"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/menuVu"
+        android:title="Vus"
+        android:icon="@drawable/ic_checked"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>

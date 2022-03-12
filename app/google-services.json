@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "267643600607",
+    "project_id": "petitspapiers-638af",
+    "storage_bucket": "petitspapiers-638af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267643600607:android:d8567688409b1968f0736a",
+        "android_client_info": {
+          "package_name": "com.example.petitspapiers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "267643600607-ph1agam6b24tbrl18oafguojggjn934u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUvRLq-3l-BIokxofEe4jkcGvjOKrhjCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "267643600607-ph1agam6b24tbrl18oafguojggjn934u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

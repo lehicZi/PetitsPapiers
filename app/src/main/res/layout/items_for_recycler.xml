@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/recyclerLayout"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/filmizTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonVu"
+        android:layout_marginStart="5dp"
+        android:maxWidth="280dp"
+        android:text="Filmiz title"
+        android:textColor="#D3D3D3"
+        android:textSize="21sp" />
+
+    <TextView
+        android:id="@+id/typeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/filmizTitle"
+        android:background="@drawable/orange_rounded_edges"
+        android:text="Type" />
+
+    <TextView
+        android:id="@+id/orderView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/typeView"
+        android:layout_toEndOf="@+id/filmizTitle"
+        android:background="@drawable/crimson_rounded_edges"
+        android:visibility="invisible"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="x" />
+
+
+
+    <Button
+        android:id="@+id/buttonVu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="Vu" />
+
+
+
+</RelativeLayout>
