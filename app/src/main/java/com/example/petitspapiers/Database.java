@@ -95,6 +95,7 @@ public class Database extends SQLiteOpenHelper {
             Filmiz filmiz = new Filmiz(title, type, isDispo);
             filmiz.setId(id);
             filmiz.setTireOrder(tireOrder);
+            filmiz.setStatus(status);
 
 
             returnList.add(filmiz);

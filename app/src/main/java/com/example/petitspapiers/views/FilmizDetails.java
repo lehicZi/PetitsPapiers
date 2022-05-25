@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import com.example.petitspapiers.Database;
 import com.example.petitspapiers.GetDatas;
 import com.example.petitspapiers.R;
 import com.example.petitspapiers.Utils;
+import com.example.petitspapiers.constants.FilmizStatus;
 import com.example.petitspapiers.constants.Filmiztype;
 import com.example.petitspapiers.constants.SortMods;
 import com.example.petitspapiers.objects.Filmiz;
@@ -47,6 +49,7 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
 
     Button suppButton;
     Button renameButton;
+    Button newSeasonButton;
 
     Switch dispoSwitch;
 
@@ -81,6 +84,7 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
 
         suppButton = findViewById(R.id.detailSuppBtn);
         renameButton = findViewById(R.id.detailRenameBtn);
+        newSeasonButton = findViewById(R.id.detailNewSeasonBtn);
 
         dispoSwitch = findViewById(R.id.detailDispo);
 
@@ -139,6 +143,25 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
 
     }
 
+
+    private void setNewSeasonButton(){
+
+        if ((currentFilmiz.getType() == Filmiztype.SERIE) && (currentFilmiz.getStatus() == FilmizStatus.VU)) {
+            newSeasonButton.setVisibility(View.VISIBLE);
+        }
+
+        newSeasonButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentFilmiz.setStatus(FilmizStatus.AVOIR);
+                Database.updateStatus(FilmizDetails.this, currentFilmiz);
+                DataShared.getInstance().setSortMod(SortMods.ALAPHABETIC);
+                Utils.openOtherActivity(MainActivity.class, FilmizDetails.this);
+            }
+        });
+
+    }
+
     private void setSwitchListener(){
         dispoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -155,6 +178,7 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
         System.out.println(createURL());
         setSuppButtonListener();
         setRenameButtonListener();
+        setNewSeasonButton();
         setDispoSwitch();
         setSwitchListener();
 

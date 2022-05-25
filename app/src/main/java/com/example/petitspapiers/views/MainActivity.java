@@ -1,11 +1,14 @@
 package com.example.petitspapiers.views;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -16,6 +19,7 @@ import com.example.petitspapiers.Comparators;
 import com.example.petitspapiers.DataShared;
 import com.example.petitspapiers.Database;
 import com.example.petitspapiers.R;
+import com.example.petitspapiers.SwipeListener;
 import com.example.petitspapiers.Utils;
 import com.example.petitspapiers.constants.FilmizStatus;
 import com.example.petitspapiers.constants.Filmiztype;
@@ -30,13 +34,15 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SwipeListener.SwipeResults {
 
     BottomNavigationView navigationBar;
 
     ViewManager viewManager;
 
     FrameLayout mainFragment;
+
+    RelativeLayout mainLayout;
 
     VuFragment vuFragment;
     AVoirFragment aVoirFragment;
@@ -46,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     Menu sortMenu;
     MenuItem tireOrderMenuItem;
     SearchView searchView;
+
+    SwipeListener swipeListener;
 
     int currentFragment = DataShared.getInstance().getCurrentFragment();
 
@@ -178,6 +186,8 @@ public class MainActivity extends AppCompatActivity {
 
         navigationBar = findViewById(R.id.navigationBar);
 
+        mainLayout = findViewById(R.id.mainRelativeLayout);
+
         vuFragment = new VuFragment();
         aVoirFragment = new AVoirFragment();
         aEcrireFragment = new AEcrireFragment();
@@ -190,6 +200,8 @@ public class MainActivity extends AppCompatActivity {
 
         notifyIfDlNeeded();
 
+        this.swipeListener = new SwipeListener(mainLayout, this);
+
 
     }
 
@@ -201,54 +213,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-
                 switch (item.getItemId()) {
-
-                    case R.id.menuAecrire:
-
-                        closeSearchView();
-                        currentFragment = FilmizStatus.AECRIRE;
-                        DataShared.getInstance().setCurrentFragment(currentFragment);
-                        DataShared.getInstance().setSortMod(SortMods.ALAPHABETIC);
-                        DataShared.getInstance().getStatusList(MainActivity.this, FilmizStatus.AECRIRE);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.mainFragment, aEcrireFragment).commit();
-                        tireOrderMenuItem.setVisible(false);
-                        break;
-
-                    case R.id.menuVu:
-
-                        closeSearchView();
-                        currentFragment = FilmizStatus.VU;
-                        DataShared.getInstance().setCurrentFragment(currentFragment);
-                        DataShared.getInstance().setSortMod(SortMods.ALAPHABETIC);
-                        DataShared.getInstance().getStatusList(MainActivity.this, FilmizStatus.VU);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.mainFragment, vuFragment).commit();
-                        tireOrderMenuItem.setVisible(false);
-                        break;
-
-                    case R.id.menuAVoir:
-
-                        closeSearchView();
-                        currentFragment = FilmizStatus.AVOIR;
-                        DataShared.getInstance().setCurrentFragment(currentFragment);
-                        DataShared.getInstance().setSortMod(SortMods.ALAPHABETIC);
-                        DataShared.getInstance().getStatusList(MainActivity.this, FilmizStatus.AVOIR);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.mainFragment, aVoirFragment).commit();
-                        tireOrderMenuItem.setVisible(false);
-                        break;
-
-                    case R.id.menuTire:
-
-                        closeSearchView();
-                        currentFragment = FilmizStatus.TIRE;
-                        DataShared.getInstance().setCurrentFragment(currentFragment);
-                        DataShared.getInstance().setSortMod(SortMods.TIREORDER);
-                        DataShared.getInstance().getStatusList(MainActivity.this, FilmizStatus.TIRE);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.mainFragment, tireFragment).commit();
-                        tireOrderMenuItem.setVisible(true);
-                        break;
-
+                    case R.id.menuAecrire: goToFragment(FilmizStatus.AECRIRE);
+                    break;
+                    case R.id.menuAVoir: goToFragment(FilmizStatus.AVOIR);
+                    break;
+                    case R.id.menuVu: goToFragment(FilmizStatus.VU);
+                    break;
+                    case R.id.menuTire: goToFragment(FilmizStatus.TIRE);
+                    break;
+                    default:throw new IllegalStateException("Menu qui n'existe pas !" + currentFragment);
                 }
+
 
                 return true;
             }
@@ -256,6 +232,40 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+
+    }
+
+    private void goToFragment(int FragmentId){
+
+        closeSearchView();
+        currentFragment = FragmentId;
+        DataShared.getInstance().setCurrentFragment(currentFragment);
+        DataShared.getInstance().getStatusList(MainActivity.this, FragmentId);
+
+
+        switch (FragmentId){
+            case FilmizStatus.AECRIRE:
+                DataShared.getInstance().setSortMod(SortMods.ALAPHABETIC);
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragment, aEcrireFragment).commit();
+                tireOrderMenuItem.setVisible(false);
+                break;
+            case FilmizStatus.AVOIR:
+                DataShared.getInstance().setSortMod(SortMods.ALAPHABETIC);
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragment, aVoirFragment).commit();
+                tireOrderMenuItem.setVisible(false);
+                break;
+            case FilmizStatus.TIRE:
+                DataShared.getInstance().setSortMod(SortMods.TIREORDER);
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragment, tireFragment).commit();
+                tireOrderMenuItem.setVisible(true);
+                break;
+            case FilmizStatus.VU:
+                DataShared.getInstance().setSortMod(SortMods.ALAPHABETIC);
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragment, vuFragment).commit();
+                tireOrderMenuItem.setVisible(false);
+                break;
+            default: throw new IllegalStateException("Fragment qui n'existe pas !" + currentFragment);
+        }
 
     }
 
@@ -416,4 +426,63 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onSwipedLeft() {
+
+        switch (this.currentFragment){
+            case FilmizStatus.AECRIRE:
+                goToFragment(FilmizStatus.AVOIR);
+                navigationBar.setSelectedItemId(R.id.menuAVoir);
+                break;
+            case FilmizStatus.AVOIR:
+                goToFragment(FilmizStatus.TIRE);
+                navigationBar.setSelectedItemId(R.id.menuTire);
+                break;
+            case FilmizStatus.TIRE:
+                goToFragment(FilmizStatus.VU);
+                navigationBar.setSelectedItemId(R.id.menuVu);
+                break;
+            case FilmizStatus.VU:
+                goToFragment(FilmizStatus.AECRIRE);
+                navigationBar.setSelectedItemId(R.id.menuAecrire);
+                break;
+            default: throw new IllegalStateException("Fragment qui n'existe pas !" + currentFragment);
+        }
+
+    }
+
+    @Override
+    public void onSwipedRight() {
+
+        switch (this.currentFragment){
+            case FilmizStatus.AECRIRE:
+                goToFragment(FilmizStatus.VU);
+                navigationBar.setSelectedItemId(R.id.menuVu);
+                break;
+            case FilmizStatus.AVOIR:
+                goToFragment(FilmizStatus.AECRIRE);
+                navigationBar.setSelectedItemId(R.id.menuAecrire);
+                break;
+            case FilmizStatus.TIRE:
+                goToFragment(FilmizStatus.AVOIR);
+                navigationBar.setSelectedItemId(R.id.menuAVoir);
+                break;
+            case FilmizStatus.VU:
+                goToFragment(FilmizStatus.TIRE);
+                navigationBar.setSelectedItemId(R.id.menuTire);
+                break;
+            default: throw new IllegalStateException("Fragment qui n'existe pas !" + currentFragment);
+        }
+
+    }
+
+    @Override
+    public void onSwipedUp() {
+
+    }
+
+    @Override
+    public void onSwipedDown() {
+
+    }
 }
