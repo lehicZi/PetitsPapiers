@@ -26,11 +26,16 @@ import com.example.petitspapiers.Database;
 import com.example.petitspapiers.R;
 import com.example.petitspapiers.Utils;
 import com.example.petitspapiers.constants.FilmizStatus;
+import com.example.petitspapiers.constants.Filmiztype;
 import com.example.petitspapiers.objects.Filmiz;
 import com.example.petitspapiers.views.ViewManager;
 import com.example.petitspapiers.views.recycler.AEcrireAdapter;
 import com.example.petitspapiers.views.recycler.RecyclerItems;
 import com.example.petitspapiers.views.recycler.VuAdapter;
+import com.r0adkll.slidr.Slidr;
+import com.r0adkll.slidr.model.SlidrConfig;
+import com.r0adkll.slidr.model.SlidrInterface;
+import com.r0adkll.slidr.model.SlidrPosition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +50,7 @@ public class AEcrireFragment extends Fragment implements AEcrireAdapter.callback
     ViewManager viewManager;
 
     String usedTitle;
-    int usedType = 0;
+    int usedType = 1;
     boolean dispo = true;
 
 
@@ -100,6 +105,7 @@ public class AEcrireFragment extends Fragment implements AEcrireAdapter.callback
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -246,7 +252,7 @@ public class AEcrireFragment extends Fragment implements AEcrireAdapter.callback
             @Override
             public void onClick(View view) {
 
-                usedType = 0;
+                usedType = Filmiztype.SERIE;
 
             }
         });
@@ -255,7 +261,7 @@ public class AEcrireFragment extends Fragment implements AEcrireAdapter.callback
             @Override
             public void onClick(View view) {
 
-                usedType = 1;
+                usedType = Filmiztype.FILM;
 
             }
         });

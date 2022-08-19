@@ -13,8 +13,9 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:hint="Nom du film/ nom de la série"
+        android:textSize="16sp"
         android:inputType="textCapSentences"
-        android:maxWidth="260dp" />
+        android:maxWidth="240dp" />
 
     <RadioGroup
         android:id="@+id/typeSelectionGroup"
@@ -29,7 +30,6 @@
             android:id="@+id/serieType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:onClick="checkRadioButton"
             android:text="Série" />
 
@@ -37,6 +37,7 @@
             android:id="@+id/filmType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:onClick="checkRadioButton"
             android:text="Film" />
 
