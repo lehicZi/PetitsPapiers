@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.petitspapiers.DataShared;
 import com.example.petitspapiers.Database;
+import com.example.petitspapiers.GetAdvancedDatas;
 import com.example.petitspapiers.GetDatas;
 import com.example.petitspapiers.R;
 import com.example.petitspapiers.Utils;
@@ -29,6 +30,7 @@ import com.example.petitspapiers.constants.FilmizStatus;
 import com.example.petitspapiers.constants.Filmiztype;
 import com.example.petitspapiers.constants.SortMods;
 import com.example.petitspapiers.objects.Filmiz;
+import com.example.petitspapiers.objects.MoreInfosModel;
 import com.example.petitspapiers.objects.ResultModel;
 
 import org.apache.commons.lang3.StringUtils;
@@ -36,7 +38,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.HashMap;
 import java.util.List;
 
-public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncResponse {
+public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncResponse, GetAdvancedDatas.AsyncResponse {
 
     ImageView filmizImage;
     TextView filmizTitle;
@@ -57,6 +59,8 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
     Filmiz currentFilmiz;
     String fullTitle;
 
+    ResultModel choseFilmiz;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +70,7 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
         fullTitle = currentFilmiz.getTitle();
         GetDatas getDatas = new GetDatas(createURL(), this, this);
         getDatas.execute();
+
         setTitle(fullTitle);
 
 
@@ -174,7 +179,7 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
         });
     }
 
-    private void setDatas(List<ResultModel> output){
+    private void setDatas(ResultModel choseFilmiz, MoreInfosModel details){
 
 
         System.out.println(createURL());
@@ -185,22 +190,22 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
         setSwitchListener();
 
         try {
-            ResultModel filmiz = getTheGoodOne(output);
+            ResultModel filmiz = choseFilmiz;
 
             buildImage(filmiz.getImage());
             filmizTitle.setText(filmiz.getTitleFr());
+
             filmizDescription.setText(filmiz.getInfos());
             filmizVOTitle.setText("Titre d'origine : " + filmiz.getTitleVo());
             filmizLanguage.setText("Langue d'origine : " + setGoogLanguage(filmiz.getOriginalLanguage()));
             filmizDate.setText(filmiz.getDate());
             filmizGenres.setText("Genres : " + filmiz.getGenres());
-            filmRuntime.setText(filmiz.getRuntime());
-
+            filmRuntime.setText(details.getDuree());
             filmizType.setText(Filmiztype.getString(currentFilmiz.getType()));
             filmizType.setBackgroundResource(Filmiztype.getBackgroundColor(currentFilmiz.getType()));
 
         }
-        catch (IndexOutOfBoundsException e){
+        catch (NullPointerException e){
 
             filmizTitle.setText("Aucune information trouvée." +
                     "\n\nPeut être qu'il n'y pas de connection internet ?" +
@@ -211,6 +216,7 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
             filmizDate.setVisibility(View.INVISIBLE);
             filmizGenres.setVisibility(View.INVISIBLE);
             filmizType.setVisibility(View.INVISIBLE);
+            filmRuntime.setVisibility(View.INVISIBLE);
 
         }
 
@@ -238,6 +244,33 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
 
     }
 
+    private String createAdvancedURL(){
+
+        try {
+
+            String id = choseFilmiz.getId();
+            String JSON_URL = "";
+
+            if (currentFilmiz.getType() == Filmiztype.FILM) {
+                JSON_URL += "https://api.themoviedb.org/3/movie/" + id + "?api_key=8e65894c29a6dd9b0f230c2f0fe3bdb1&language=fr";
+            }
+            else {
+                JSON_URL += "https://api.themoviedb.org/3/tv/" + id + "?api_key=8e65894c29a6dd9b0f230c2f0fe3bdb1&language=fr";
+            }
+
+            //JSON_URL += "https://api.themoviedb.org/3/search/multi?api_key=8e65894c29a6dd9b0f230c2f0fe3bdb1&query=";
+
+            return  JSON_URL;
+
+        }
+
+        catch (NullPointerException e){
+            return "";
+        }
+
+
+    }
+
     private void buildImage(String URL){
         String imageURL = "";
         imageURL += "https://image.tmdb.org/t/p/w500";
@@ -249,19 +282,30 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
 
         final String comparableTitle = StringUtils.stripAccents(fullTitle).toLowerCase();
 
+        try {
 
-        for (ResultModel filmiz : results){
+            for (ResultModel filmiz : results){
 
-            final String comparableTitleFr = StringUtils.stripAccents(filmiz.getTitleFr()).toLowerCase();
-            final String comparableTitleVO = StringUtils.stripAccents(filmiz.getTitleVo()).toLowerCase();
+                final String comparableTitleFr = StringUtils.stripAccents(filmiz.getTitleFr()).toLowerCase();
+                final String comparableTitleVO = StringUtils.stripAccents(filmiz.getTitleVo()).toLowerCase();
 
-            if ((comparableTitle.equals(comparableTitleFr)) || comparableTitle.equals(comparableTitleVO)){
-                return filmiz;
+                if ((comparableTitle.equals(comparableTitleFr)) || comparableTitle.equals(comparableTitleVO)){
+                    return filmiz;
+                }
+
             }
+
+            return results.get(0);
 
         }
 
-        return results.get(0);
+         catch (IndexOutOfBoundsException e){
+
+            return null;
+
+        }
+
+
     }
 
     private void askDelete(Filmiz filmiz){
@@ -316,8 +360,15 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
 
     @Override
     public void processFinish(List<ResultModel> output) {
-        instanciateView();
-        setDatas(output);
+        choseFilmiz = getTheGoodOne(output);
+        GetAdvancedDatas getAdvancedDatas = new GetAdvancedDatas(createAdvancedURL(), this, this);
+        getAdvancedDatas.execute();
+
     }
 
+    @Override
+    public void advancedProcessFinish(MoreInfosModel output) {
+        instanciateView();
+        setDatas(choseFilmiz, output);
+    }
 }

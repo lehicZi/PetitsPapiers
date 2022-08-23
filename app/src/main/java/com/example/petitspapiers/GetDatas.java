@@ -33,7 +33,7 @@ public class GetDatas extends AsyncTask<String, String, String> {
     private String mediaType;
     private String date;
     private String genres;
-    private String runtime;
+    private String id;
 
     private List<ResultModel> filmizs;
 
@@ -135,7 +135,6 @@ public class GetDatas extends AsyncTask<String, String, String> {
 
                     titleFr = jsonObject1.getString("title");
                     titleVo = jsonObject1.getString("original_title");
-                    //runtime = jsonObject1.getString("runtime");
                     try {
                         date = "Date de parution : " + translateDate(jsonObject1.getString("release_date"));
                     }
@@ -157,11 +156,12 @@ public class GetDatas extends AsyncTask<String, String, String> {
 
                 }
 
+                id = jsonObject1.getString("id");
                 image = jsonObject1.getString("poster_path");
                 infos = jsonObject1.getString("overview");
                 originalLanguage = jsonObject1.getString("original_language");
 
-                ResultModel resultModel = new ResultModel(titleFr, titleVo, image, infos, originalLanguage, date, this.genres, runtime);
+                ResultModel resultModel = new ResultModel(titleFr, titleVo, image, infos, originalLanguage, date, this.genres, id);
 
                 this.filmizs.add(resultModel);
 
