@@ -46,6 +46,7 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
     TextView filmizDate;
     TextView filmizGenres;
     TextView filmizType;
+    TextView filmRuntime;
 
     Button suppButton;
     Button renameButton;
@@ -81,6 +82,7 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
         filmizDate = findViewById(R.id.detailDate);
         filmizGenres = findViewById(R.id.detailGenres);
         filmizType = findViewById(R.id.detailType);
+        filmRuntime = findViewById(R.id.detailDuree);
 
         suppButton = findViewById(R.id.detailSuppBtn);
         renameButton = findViewById(R.id.detailRenameBtn);
@@ -192,6 +194,7 @@ public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncRe
             filmizLanguage.setText("Langue d'origine : " + setGoogLanguage(filmiz.getOriginalLanguage()));
             filmizDate.setText(filmiz.getDate());
             filmizGenres.setText("Genres : " + filmiz.getGenres());
+            filmRuntime.setText(filmiz.getRuntime());
 
             filmizType.setText(Filmiztype.getString(currentFilmiz.getType()));
             filmizType.setBackgroundResource(Filmiztype.getBackgroundColor(currentFilmiz.getType()));

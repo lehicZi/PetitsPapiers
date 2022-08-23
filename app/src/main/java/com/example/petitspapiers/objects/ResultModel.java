@@ -9,6 +9,18 @@ public class ResultModel {
     private final String originalLanguage;
     private final String date;
     private final String genres;
+    private String runtime = null;
+
+    public ResultModel(String titleFr, String titleVo, String image, String infos, String originalLanguage, String date, String genres, String runtime) {
+        this.titleFr = titleFr;
+        this.titleVo = titleVo;
+        this.image = image;
+        this.infos = infos;
+        this.originalLanguage = originalLanguage;
+        this.date = date;
+        this.genres = genres;
+        this.runtime = runtime;
+    }
 
     public ResultModel(String titleFr, String titleVo, String image, String infos, String originalLanguage, String date, String genres) {
         this.titleFr = titleFr;
@@ -47,6 +59,8 @@ public class ResultModel {
     public String getGenres() {
         return genres;
     }
+
+    public String getRuntime(){return runtime;}
 
     @Override
     public String toString() {

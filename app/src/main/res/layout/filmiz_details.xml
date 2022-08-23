@@ -39,10 +39,21 @@
         android:id="@+id/detailDispo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_below="@+id/detailType"
+        android:layout_marginStart="10dp"
+        android:layout_marginRight="10dp"
         android:layout_toEndOf="@+id/detailImage"
         android:text="Disponibilité" />
+
+    <TextView
+        android:id="@+id/detailDuree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detailDispo"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/detailImage"
+        android:text="durée" />
 
     <TextView
         android:id="@+id/detailTitleVO"
@@ -58,11 +69,11 @@
         android:id="@+id/detailLanguage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/detailImage"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_below="@+id/detailImage"
-        android:layout_alignParentEnd="true"
         android:maxWidth="195dp"
         android:text="Langue d'origine" />
 
@@ -119,11 +130,10 @@
         android:id="@+id/detailNewSeasonBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:visibility="invisible"
-        android:text="Saison +"/>
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Saison +"
+        android:visibility="invisible" />
 </RelativeLayout>

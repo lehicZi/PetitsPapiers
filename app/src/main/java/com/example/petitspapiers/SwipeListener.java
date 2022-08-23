@@ -11,14 +11,14 @@ public class SwipeListener implements View.OnTouchListener{
     private SwipeResults swipeResults;
 
     public SwipeListener(View view, SwipeResults swipeResults) {
-        //initialize threshold values
+        //valeurs seuil
         int threshold = 50;
         int velocityThreshold = 50;
 
         this.swipeResults = swipeResults;
 
 
-        // initialize simple gesture detector
+        //Détection du swipe
         GestureDetector.SimpleOnGestureListener listener =
                 new GestureDetector.SimpleOnGestureListener(){
 
@@ -29,7 +29,7 @@ public class SwipeListener implements View.OnTouchListener{
 
                     @Override
                     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                        // get x and y difference
+                        // x - y
                         float xDiff = e2.getX() - e1.getX();
                         float yDiff = e2.getY() - e1.getY();
                         try {
@@ -71,7 +71,7 @@ public class SwipeListener implements View.OnTouchListener{
                     }
                 };
 
-        //Initialize gesture detector
+        //instanciation de la détection
         gestureDetector = new GestureDetector(listener);
         //Set listener on view
         view.setOnTouchListener(this);
@@ -79,7 +79,7 @@ public class SwipeListener implements View.OnTouchListener{
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-        //Return gesture event
+        //Return un GestureEvent
         return gestureDetector.onTouchEvent(motionEvent);
     }
 
