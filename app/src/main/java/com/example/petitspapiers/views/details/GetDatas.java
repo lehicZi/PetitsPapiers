@@ -1,9 +1,10 @@
-package com.example.petitspapiers;
+package com.example.petitspapiers.views.details;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.example.petitspapiers.DataShared;
 import com.example.petitspapiers.constants.Filmiztype;
 import com.example.petitspapiers.objects.Filmiz;
 import com.example.petitspapiers.objects.ResultModel;
@@ -123,6 +124,8 @@ public class GetDatas extends AsyncTask<String, String, String> {
                     titleFr = jsonObject1.getString("name");
                     titleVo = jsonObject1.getString("original_name");
 
+                    //Add Series relative fields
+
                     try {
                         date = "Date de parution du premier épidode : " + translateDate(jsonObject1.getString("first_air_date"));
                     }
@@ -135,6 +138,9 @@ public class GetDatas extends AsyncTask<String, String, String> {
 
                     titleFr = jsonObject1.getString("title");
                     titleVo = jsonObject1.getString("original_title");
+
+                    //Add Films relative fields
+
                     try {
                         date = "Date de parution : " + translateDate(jsonObject1.getString("release_date"));
                     }
@@ -160,6 +166,8 @@ public class GetDatas extends AsyncTask<String, String, String> {
                 image = jsonObject1.getString("poster_path");
                 infos = jsonObject1.getString("overview");
                 originalLanguage = jsonObject1.getString("original_language");
+
+                //Add Global fields
 
                 ResultModel resultModel = new ResultModel(titleFr, titleVo, image, infos, originalLanguage, date, this.genres, id);
 

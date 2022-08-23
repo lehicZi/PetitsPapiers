@@ -17,12 +17,11 @@ import com.example.petitspapiers.Comparators;
 import com.example.petitspapiers.DataShared;
 import com.example.petitspapiers.Database;
 import com.example.petitspapiers.R;
-import com.example.petitspapiers.Utils;
 import com.example.petitspapiers.constants.FilmizStatus;
 import com.example.petitspapiers.constants.Filmiztype;
 import com.example.petitspapiers.constants.SortMods;
 import com.example.petitspapiers.objects.Filmiz;
-import com.example.petitspapiers.views.FilmizDetails;
+import com.example.petitspapiers.views.details.FilmizDetails;
 
 import java.util.List;
 

@@ -4,13 +4,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,13 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.petitspapiers.DataShared;
 import com.example.petitspapiers.Database;
 import com.example.petitspapiers.R;
-import com.example.petitspapiers.Utils;
 import com.example.petitspapiers.constants.FilmizStatus;
 import com.example.petitspapiers.constants.Filmiztype;
 import com.example.petitspapiers.constants.SortMods;
 import com.example.petitspapiers.objects.Filmiz;
-import com.example.petitspapiers.views.FilmizDetails;
-import com.example.petitspapiers.views.MainActivity;
+import com.example.petitspapiers.views.details.FilmizDetails;
 
 import java.util.List;
 

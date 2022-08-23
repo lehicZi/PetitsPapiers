@@ -1,9 +1,10 @@
-package com.example.petitspapiers;
+package com.example.petitspapiers.views.details;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.example.petitspapiers.DataShared;
 import com.example.petitspapiers.constants.Filmiztype;
 import com.example.petitspapiers.objects.Filmiz;
 import com.example.petitspapiers.objects.MoreInfosModel;
@@ -113,15 +114,22 @@ public class GetAdvancedDatas extends AsyncTask<String, String, String> {
                     String nbEp = jsonObject.getString("number_of_episodes");
                     runtime = translateSeriesRuntime(nbEp, nbSeasons);
 
+                    //Add Series relative advanced fields
+
 
                 }
                 else {
 
                     runtime = jsonObject.getString("runtime") + " min.";
 
+                    //Add Films relative advanced fields
+
 
                 }
 
+            //Add global advanced fields
+
+            //Don't forget to update details arguments
             advancedInfos.setDuree(runtime);
 
             } catch (JSONException jsonException) {

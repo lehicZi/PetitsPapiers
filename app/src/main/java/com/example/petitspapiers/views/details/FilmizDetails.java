@@ -1,10 +1,8 @@
-package com.example.petitspapiers.views;
+package com.example.petitspapiers.views.details;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.InputType;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -14,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,8 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.petitspapiers.DataShared;
 import com.example.petitspapiers.Database;
-import com.example.petitspapiers.GetAdvancedDatas;
-import com.example.petitspapiers.GetDatas;
 import com.example.petitspapiers.R;
 import com.example.petitspapiers.Utils;
 import com.example.petitspapiers.constants.FilmizStatus;
@@ -32,10 +27,10 @@ import com.example.petitspapiers.constants.SortMods;
 import com.example.petitspapiers.objects.Filmiz;
 import com.example.petitspapiers.objects.MoreInfosModel;
 import com.example.petitspapiers.objects.ResultModel;
+import com.example.petitspapiers.views.MainActivity;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class FilmizDetails extends AppCompatActivity implements GetDatas.AsyncResponse, GetAdvancedDatas.AsyncResponse {
